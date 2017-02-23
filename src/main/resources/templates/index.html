@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+    <title>SOES</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="css/style.css" rel="stylesheet"/>
+  </head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <script>
+      function chooseFile(){
+
+      }
+  </script>
+
+  <body onload="onLoad();">
+
+    <div class="container-fluid">
+	<div class="row" align="center">
+		<div class="col-md-12">
+			<h2 class="text-center text-primary">
+				Stock Order Execution System
+			</h2>
+			<form role="form" enctype="multipart/form-data" action="/submit" method="POST">
+
+				<div class="form-group" >
+
+                    <a class='btn btn-primary' id="uploadButton" onclick="chooseFile()">
+                        Choose File
+                        <input type="file" onchange="updateButton();" id="inputFile" name="inputFile" style='display:none;position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;' />
+                    </a>
+
+				</div>
+				<button type="submit" class="btn btn-default">
+					Submit
+				</button>
+			</form>
+            <br/>
+            <br/>
+			<div class="row" id="resultTable" th:if ="${orders}!=null">
+				<div class="col-md-12">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>
+									#
+								</th>
+								<th>
+									Side
+								</th>
+								<th>
+									Company
+								</th>
+								<th>
+									Quantity
+								</th>
+                                <th>
+									Balance
+								</th>
+                                <th>
+									Status
+								</th>
+							</tr>
+						</thead>
+						<tr th:each="order : ${orders}">
+							<td width="20%" th:text="${order.stockID}"></td>
+							<td width="20%" th:text="${order.side}"></td>
+							<td width="20%" th:text="${order.company}"></td>
+							<td width="20%" th:text="${order.quantity}"></td>
+							<td width="20%" th:text="${order.balance}"></td>
+							<td width="20%" th:text="${order.status}"></td>
+						</tr>
+						<tbody>
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class = "alert alert-danger" width="50%" th:if ="${errors}!=null">
+				<strong>Error!</strong>
+				<ul>
+                    <li th:each="exception : ${errors}" th:text="${exception}"></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/soes.js"></script>
+  </body>
+</html>
